@@ -1,7 +1,24 @@
 import express from 'express';
-import {something} from '../controllers/main.controller';
+import {
+    homePage,
+    loginPage, 
+    login,
+    signupPage,
+    signup
+} from '../controllers/main.controller';
+
 const router = express.Router();
 
-router.get('/', something);
+// DEFINING ALL THE [GET] ROUTES
+// -----------------------------
+router.get('/', homePage);
+router.get('/login', loginPage);
+router.get('/signup', signupPage);
+
+
+// DEFINING ALL THE [POST] ROUTES
+// ------------------------------
+router.post('/login',login);
+router.post('/signup', signup);
 
 export default router;
