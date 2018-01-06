@@ -26,30 +26,24 @@ export const signup = (req, res) => {
     const {userName, password, email} = req.body;
     console.log({userName, password, email});
 
-    bcrypt.hash(password, 10)
-        .then((hash) => {
-            let newUser = new User({
-                userName,
-                email,
-                password: hash,
-            });
+    let newUser = new User({
+        userName,
+        password,
+        email
+    });
 
-            newUser.save((error) => {
-                if(error){
-                    console.log(`Error saving to database ${error}`);
-                    res.json({
-                        success: false,
-                        message: 'Saving to database failed'
-                    });
-                }else{
-                    res.json({
-                        success: true,
-                        message: 'User Created'
-                    });
-                }
+    newUser.save((error) => {
+        if(error){
+            console.log(`Error saving to database ${error}`);
+            res.json({
+                success: false,
+                message: 'Saving to database failed'
             });
-        })
-        .catch(error => {
-            console.log(`Error in hashing the password ${error}`);
-        });
+        }else{
+            res.json({
+                success: true,
+                message: 'User Created'
+            });
+        }
+    });
 };
