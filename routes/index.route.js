@@ -7,7 +7,7 @@ import {
     signup
 } from '../controllers/main.controller';
 
-import {validateLogin} from '../middlewares/validator';
+import {validateLogin, validateSignup} from '../middlewares/validator';
 
 const router = express.Router();
 
@@ -21,6 +21,6 @@ router.get('/signup', signupPage);
 // DEFINING ALL THE [POST] ROUTES
 // ------------------------------
 router.post('/login', validateLogin, login);
-router.post('/signup', signup);
+router.post('/signup', validateSignup, signup);
 
 export default router;
