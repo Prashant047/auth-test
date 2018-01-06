@@ -13,7 +13,9 @@ export const signupPage = (req, res) => {
 export const login = (req, res) => {
     const {email, password} = req.body;
     console.log({email, password});
-    res.send('login done');
+    res.status(200).json({
+        message: 'Login Success'
+    });
 };
 
 export const signup = (req, res) => {
