@@ -26,6 +26,7 @@
         email: email.value,
         password: password.value
     }).then(function(res) {
+        console.log(res.data);
         email.value = '';
         password.value = '';
     }).catch(function(error){

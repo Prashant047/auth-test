@@ -32,6 +32,7 @@
         password: userPassword.value,
         email: userEmail.value
     }).then(function(res){
+        console.log(res.data);
         userName.value = '';
         userPassword.value = '';
         userEmail.value = '';

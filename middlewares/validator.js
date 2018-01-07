@@ -5,10 +5,11 @@ export const validateLogin = (req, res, next) => {
     if(validate(email) && password.length != 0){
         next();
     }
-
-    res.status(400).json({
-        message: "Login Failed"
-    });
+    else{
+        res.status(400).json({
+            message: "Login Failed"
+        });
+    }
 };
 
 export const validateSignup = (req, res, next) => {

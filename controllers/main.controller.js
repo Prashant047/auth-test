@@ -1,5 +1,7 @@
+import jwt from 'jsonwebtoken';
 import {User} from '../models/userModel';
 import bcrypt from 'bcrypt';
+import config from '../config';
 
 export const homePage = (req, res) => {
     res.render('pages/home');
@@ -15,9 +17,11 @@ export const signupPage = (req, res) => {
 
 export const login = (req, res) => {
     const {email, password} = req.body;
-    console.log({email, password});
+    console.log({email, password, token: req.session.token});
+
     res.status(200).json({
         success: true,
+        token: req.session.token,
         message: 'Login Success'
     });
 };
@@ -46,4 +50,25 @@ export const signup = (req, res) => {
             });
         }
     });
+};
+
+export const userPage = (req, res) => {
+    // console.log(req.session.token);
+    if(!req.session.token){
+        res.json({
+            success: false,
+            message: 'You are not authenticated to view this page'
+        });
+    }
+    else{
+        console.log('yep');
+        jwt.verify(req.session.token, config.webToken_secret, (error, decoded) => {
+            console.log(decoded);
+        });
+        res.json({
+            success: true,
+            token: req.session.token,
+            message: 'You are authenticated'
+        });
+    }
 };

@@ -5,6 +5,7 @@ import {connectDatabase} from './database/mongodb';
 import config from './config';
 import ejs from 'ejs';
 import expressLayouts from 'express-ejs-layouts';
+import session from 'express-session';
 
 import routes from './routes/index.route';
 
@@ -14,6 +15,16 @@ const app = express();
 app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+app.use(session({
+    secret: config.session_secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 10*60*60, // in seconds
+        secure: false
+    }
+}));
 
 // SEETING THE VIEW ENGINE TO EJS
 app.use(expressLayouts);
