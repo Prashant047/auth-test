@@ -61,12 +61,20 @@ export const userPage = (req, res) => {
     }
     else{
         jwt.verify(req.session.token, config.webToken_secret, (error, decoded) => {
-            console.log(decoded);
-            res.json({
-                success: true,
-                token: req.session.token,
-                message: 'You are authenticated'
-            });
+            if(!decoded){
+                console.log('Wrong token');
+                res.json({
+                    success: false,
+                    message: 'Wrong token'
+                });
+            } else {
+                console.log(decoded);
+                res.json({
+                    success: true,
+                    token: req.session.token,
+                    message: 'You are authenticated'
+                });
+            }
         });
     }
 };
