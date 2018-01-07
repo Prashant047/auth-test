@@ -53,7 +53,6 @@ export const signup = (req, res) => {
 };
 
 export const userPage = (req, res) => {
-    // console.log(req.session.token);
     if(!req.session.token){
         res.json({
             success: false,
@@ -61,7 +60,6 @@ export const userPage = (req, res) => {
         });
     }
     else{
-        console.log('yep');
         jwt.verify(req.session.token, config.webToken_secret, (error, decoded) => {
             console.log(decoded);
         });

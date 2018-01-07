@@ -6,7 +6,6 @@ export const authenticateUser = (req, res, next) => {
     const {email, password} = req.body;
     User.findOne({email}, function(error, user){
         if(!user){
-            console.log("user not found");
             res.status(404).json({
                 success: false,
                 message: 'User not Found'
@@ -15,7 +14,6 @@ export const authenticateUser = (req, res, next) => {
         }
         else{
             if(user.comparePassword(password)){
-                console.log("password correct");
                 let token = jwt.sign({
                     userName: user.userName,
                     email: user.email
@@ -25,7 +23,6 @@ export const authenticateUser = (req, res, next) => {
                 next();
             }
             else{
-                console.log("password incorrect");
                 res.json({
                     success: false,
                     message: 'Incorrect password'

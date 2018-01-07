@@ -15,7 +15,6 @@ export const validateLogin = (req, res, next) => {
 export const validateSignup = (req, res, next) => {
     const {userName, password, email} = req.body;
     if(validate(email) && password.length != 0 && userName.length != 0){
-        console.log('valid');
         next();
     }
     else{
