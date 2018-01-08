@@ -19,11 +19,12 @@ export const login = (req, res) => {
     const {email, password} = req.body;
     console.log({email, password, token: req.session.token});
 
-    res.status(200).json({
-        success: true,
-        token: req.session.token,
-        message: 'Login Success'
-    });
+    // res.status(200).json({
+    //     success: true,
+    //     token: req.session.token,
+    //     message: 'Login Success'
+    // });
+    res.redirect('/user');
 };
 
 export const signup = (req, res) => {
@@ -54,26 +55,37 @@ export const signup = (req, res) => {
 
 export const userPage = (req, res) => {
     if(!req.session.token){
-        res.json({
+        // res.json({
+        //     success: false,
+        //     message: 'You are not authenticated to view this page'
+        // });
+        res.render('pages/error', {error: {
             success: false,
-            message: 'You are not authenticated to view this page'
-        });
+            title: 'Bad Request',
+            message: 'Your are not authenticated to view this page. Please Login to continue'
+        }});
     }
     else{
         jwt.verify(req.session.token, config.webToken_secret, (error, decoded) => {
             if(!decoded){
                 console.log('Wrong token');
-                res.json({
+                // res.json({
+                //     success: false,
+                //     message: 'Wrong token'
+                // });
+                res.render('pages/error', {error: {
                     success: false,
-                    message: 'Wrong token'
-                });
+                    title: 'Bad Token',
+                    message: 'wrong access token provided'
+                }});
             } else {
                 console.log(decoded);
-                res.json({
-                    success: true,
-                    token: req.session.token,
-                    message: 'You are authenticated'
-                });
+                // res.json({
+                //     success: true,
+                //     token: req.session.token,
+                //     message: 'You are authenticated'
+                // });
+                res.render('pages/user',{user: decoded});
             }
         });
     }

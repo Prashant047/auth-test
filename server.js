@@ -16,6 +16,12 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+
+// SEETING THE VIEW ENGINE TO EJS
+app.use(expressLayouts);
+app.set('views', path.resolve(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 app.use(session({
     secret: config.session_secret,
     resave: false,
@@ -25,11 +31,6 @@ app.use(session({
         secure: false
     }
 }));
-
-// SEETING THE VIEW ENGINE TO EJS
-app.use(expressLayouts);
-app.set('views', path.resolve(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 app.use('/', routes);
 
