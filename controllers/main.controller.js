@@ -17,7 +17,7 @@ export const signupPage = (req, res) => {
 
 export const login = (req, res) => {
     const {email, password} = req.body;
-    console.log({email, password, token: req.session.token});
+    console.log({email, token: req.session.token});
 
     // res.status(200).json({
     //     success: true,
